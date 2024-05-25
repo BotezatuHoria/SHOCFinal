@@ -14,7 +14,7 @@
     -fx-text-fill: #b9b4b4;
 }
 
-#checkCode, #complexity, #testability, #addComment{
+#checkCode, #complexity, #testability, #translate, #addComment{
     -fx-background-color: rgba(255, 244, 244, 0.21);
     -fx-text-fill: #2a2828;
 }

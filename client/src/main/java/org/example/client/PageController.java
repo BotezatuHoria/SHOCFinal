@@ -91,6 +91,9 @@ public class PageController {
               outputBox.setText(checkTestability(inputBox.getText().trim()));
             if (complexity.isSelected())
               outputBox.setText(checkComplexity(inputBox.getText().trim()));
+            if(translate.isSelected())
+                outputBox.setText(translateCode(inputBox.getText().trim()));
+
         }
     }
 
@@ -118,6 +121,25 @@ public class PageController {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SERVER + "api/gpt/complexity"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
+        }
+    }
+    public String translateCode(String code)
+    {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/translate"))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

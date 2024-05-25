@@ -83,14 +83,14 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-            outputBox.setText(checkTestability(inputBox.getText().trim()));
+            outputBox.setText(checkTestability("Romanian", inputBox.getText().trim()));
         }
     }
 
-    public String checkTestability(String code) {
+    public String checkTestability(String language, String code) {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER + "api/gpt/translate"))
+                .uri(URI.create(SERVER + "api/gpt/translate?lang=" + language))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

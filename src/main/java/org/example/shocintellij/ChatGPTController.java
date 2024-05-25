@@ -27,7 +27,7 @@ public class ChatGPTController {
     @PostMapping("/api/gpt/translate")
     public ResponseEntity<String> getTranslationInLang(@RequestParam("lang")String lang, @org.springframework.web.bind.annotation.RequestBody String code)
     {
-        String systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the "+lang+" language.";
+        String systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the "+lang+" language. Keep the answer short";
         String question="Your single job is to translate everything from this code into "+lang+". But make sure the code still work. Don't say anything besides the code, just say the code but translated in "+lang+". The code is: ";
         String ans=askChatGpt(systemText,question,code);
         if(ans==null)
@@ -45,7 +45,7 @@ public class ChatGPTController {
                 "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
                 "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
-                "do not detect the input as code, please indicate that by saying it is not a valid input";
+                "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
         String question = "Check the testability of this code. Also try to include how much of the code can be covered by tests and the aspects that make it testable or the ones that can be improved. Try to be concise.";
         String ans = askChatGpt(systemText,question,code);
         if(ans == null)
@@ -62,7 +62,7 @@ public class ChatGPTController {
                 "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
                 "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
-                "do not detect the input as code, please indicate that by saying it is not a valid input";
+                "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
         String question = "Calculate the complexity of the following code. Try to analyse it a bit and see if it can be further optimized. Keep the explanation concise. The complexity does not need to be fully broken down.";
         String ans=askChatGpt(systemText,question,code);
         if(ans==null)
@@ -74,8 +74,8 @@ public class ChatGPTController {
     public ResponseEntity<String> getCodeExplanation(@org.springframework.web.bind.annotation.RequestBody String code)
     {
         String systemText = "For this conversation, act like a senior software engineer/developer," +
-                " with a master's degree in Computer Science and Engineering. ";
-        String question = "Describe what this code does. Try to analyse it step by step a bit. Keep the explanation concise. Do not write any code. If the code implements a specific known algorithm such as djikstra, kruskal or merge sort, also specify which one it implements.";
+                " with a master's degree in Computer Science and Engineering. Keep the answer short";
+        String question = "Describe what this code does. Try to analyse it step by step a bit. Keep the explanation concise. Do not write any code. If the code implements a specific known algorithm such as djikstra, kruskal or merge sort, also specify which one it implements. Keep the answer short";
         String ans = askChatGpt(systemText,question,code);
         if(ans == null)
             return ResponseEntity.badRequest().build();

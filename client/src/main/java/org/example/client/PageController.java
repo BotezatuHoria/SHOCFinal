@@ -83,14 +83,38 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-            outputBox.setText(checkTestability("Romanian", inputBox.getText().trim()));
+            outputBox.setText("");
+            if (testability.isSelected())
+              outputBox.setText(checkTestability(inputBox.getText().trim()));
+            if (complexity.isSelected())
+              outputBox.setText(checkComplexity(inputBox.getText().trim()));
         }
     }
 
-    public String checkTestability(String language, String code) {
+    public String checkTestability(String code) {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER + "api/gpt/translate?lang=" + language))
+                .uri(URI.create(SERVER + "api/gpt/testability"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
+        }
+    }
+
+    public String checkComplexity(String code) {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/complexity"))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

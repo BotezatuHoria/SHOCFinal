@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
 public class ChatGPTController {
+
     public static final String apiKey = "sk-proj-W8B5lUA5vZgj4QwcKQCsT3BlbkFJ0F5aX0Zuh91G1BT9hari";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -32,12 +36,36 @@ public class ChatGPTController {
     }
   //  @PostMapping("/api/gpt/complexity")
 
-    @PostMapping("/api/gpt/isTestable")
+    @PostMapping("/api/gpt/testability")
         public ResponseEntity<String> getIsItTestable(@org.springframework.web.bind.annotation.RequestBody String code)
     {
-        String systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming.";
-        String question="Is this code testable? Please attribute for each line of the following lines number 3 if it is highly testable, number 2 if it is potentially testable or number 1 if it is hardly testable. The" +
-                "code is this: ";
+        String systemText = "For this conversation, act like a senior software engineer/developer," +
+                " with a master's degree in Computer Science and Engineering. Your job is to review the " +
+                "code of others and to focus on one of these 4 aspects: 1. testability, 2. complexity, 3. " +
+                "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
+                "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
+                "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
+                "do not detect the input as code, please indicate that by saying it is not a valid input";
+        String question = "Check the testability of this code. Also try to include how much of the code can be covered by tests and the aspects that make it testable or the ones that can be improved. Try to be concise.";
+        String ans = askChatGpt(systemText,question,code);
+        if(ans == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(ans);
+
+
+    }
+
+    @PostMapping("/api/gpt/complexity")
+    public ResponseEntity<String> complexity(@org.springframework.web.bind.annotation.RequestBody String code) throws FileNotFoundException {
+
+        String systemText = "For this conversation, act like a senior software engineer/developer," +
+                " with a master's degree in Computer Science and Engineering. Your job is to review the " +
+                "code of others and to focus on one of these 4 aspects: 1. testability, 2. complexity, 3. " +
+                "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
+                "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
+                "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
+                "do not detect the input as code, please indicate that by saying it is not a valid input";
+        String question = "Calculate the complexity of the following code. Try to analyse it a bit and see if it can be further optimized. Keep the explanation concise. The complexity does not need to be fully broken down.";
         String ans=askChatGpt(systemText,question,code);
         if(ans==null)
             return ResponseEntity.badRequest().build();

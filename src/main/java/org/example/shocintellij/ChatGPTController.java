@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -15,14 +16,16 @@ public class ChatGPTController {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     @GetMapping("/api/gpt")
-    public ResponseEntity<String> getPOSTReq() {
+    public ResponseEntity<String> getPOSTReq(@RequestParam("system") String systemText,
+                                             @RequestParam("q")String question) {
         OkHttpClient client = new OkHttpClient();
-
+        systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming.";
+        question="Is this code testable? Explain what could be improved to be more testable. If it is more than 90% testable say the percentage!";
         String json = "{\n" +
                 "    \"model\": \"gpt-4\",\n" +
                 "    \"messages\": [\n" +
-                "        {\"role\": \"system\", \"content\": \"You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming.\"},\n" +
-                "        {\"role\": \"user\", \"content\": \"Is this code testable? Explain what could be improved and color with green the parts that are easily testable, with yellow the potentially testable parts, and with red the parts that are hard to test. The code is\"}\n" +
+                "        {\"role\": \"system\", \"content\": \""+systemText+"\"},\n" +
+                "        {\"role\": \"user\", \"content\": \""+question+"\"}\n" +
                 "    ],\n" +
                 "    \"max_tokens\": 2000\n" +
                 "}";

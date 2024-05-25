@@ -4,5 +4,6 @@
 }
 
 #inputBox, #outputBox, #infopoint{
-    -fx-background-color: #2D2D2D;
+    -fx-control-inner-background:#000000;
+    -fx-text-fill:#FFFFFF
 }

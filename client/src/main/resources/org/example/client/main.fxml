@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -30,12 +31,12 @@
         <Button fx:id="addButton" layoutX="885.0" layoutY="490.0" mnemonicParsing="false" onAction="#addComment" prefHeight="20.0" prefWidth="66.0" text="Add" />
       <VBox layoutX="71.0" layoutY="495.0" prefHeight="106.0" prefWidth="167.0">
          <children>
-              <RadioButton fx:id="checkCode" mnemonicParsing="false" text="Check what it does">
+              <RadioButton fx:id="checkCode" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Check what it does">
                <font>
                   <Font size="14.0" />
                </font>
             </RadioButton>
-             <RadioButton fx:id="complexity" mnemonicParsing="false" prefHeight="20.0" prefWidth="142.0" text="Complexity">
+             <RadioButton fx:id="complexity" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Complexity">
                <font>
                   <Font size="14.0" />
                </font>
@@ -51,7 +52,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="translate" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Translate">
+            <RadioButton fx:id="translate" layoutX="10.0" layoutY="61.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Translate">
                <font>
                   <Font size="14.0" />
                </font>
@@ -71,5 +72,6 @@
             <Font size="14.0" />
          </font>
       </RadioButton>
+      <TextField fx:id="selectedLanguage" layoutX="223.0" layoutY="571.0" prefHeight="20.0" prefWidth="130.0" />
     </children>
 </AnchorPane>

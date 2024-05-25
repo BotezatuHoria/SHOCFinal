@@ -44,6 +44,8 @@ public class PageController {
     private RadioButton testability;
     @FXML
     private RadioButton translate;
+    @FXML
+    private TextField selectedLanguage;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -53,7 +55,11 @@ public class PageController {
         complexity.setToggleGroup(toggleGroup);
         testability.setToggleGroup(toggleGroup);
         translate.setToggleGroup(toggleGroup);
+        selectedLanguage.setVisible(false);
         //toggleGroup.getSelectedToggle().selectedProperty();
+        translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
+        });
     }
 
     public void sendText(){
@@ -138,8 +144,11 @@ public class PageController {
     }
     public String translateCode(String code)
     {
+        String lang="english";
+        if(selectedLanguage.getText()!=null)
+            lang=selectedLanguage.getText();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER + "api/gpt/translate"))
+                .uri(URI.create(SERVER + "api/gpt/translate?lang="+lang))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

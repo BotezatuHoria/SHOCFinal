@@ -42,6 +42,8 @@ public class PageController {
 
     @FXML
     private RadioButton testability;
+    @FXML
+    private RadioButton translate;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -50,6 +52,7 @@ public class PageController {
         checkCode.setToggleGroup(toggleGroup);
         complexity.setToggleGroup(toggleGroup);
         testability.setToggleGroup(toggleGroup);
+        translate.setToggleGroup(toggleGroup);
         //toggleGroup.getSelectedToggle().selectedProperty();
     }
 
@@ -71,7 +74,7 @@ public class PageController {
             alert.showAndWait();
             return false;
         }
-        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected())){
+        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected() || translate.isSelected())){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No option selected!");
             alert.setContentText("You need to select one of the available options!");

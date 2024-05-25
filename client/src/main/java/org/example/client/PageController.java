@@ -4,9 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import okhttp3.*;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class PageController {
 
@@ -40,7 +43,7 @@ public class PageController {
     @FXML
     private RadioButton testability;
 
-    private static String SERVER = "http://localhost:8080/";
+    private static String SERVER = "http://localhost:8080";
 
     public void initialize(){
         ToggleGroup toggleGroup=new ToggleGroup();
@@ -84,31 +87,26 @@ public class PageController {
         }
     }
 
-
     public String checkTestability(String code) {
-        OkHttpClient client = new OkHttpClient();
 
-        // Properly format the JSON string
-        String json = "{\"code\": \"" + code + "\"}";
-        MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(json, JSON);
-        Request request = new Request.Builder()
-                .url(SERVER + "/api/gpt/translateRo")
-                .post(requestBody)
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "/api/gpt/translateRo"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
             }
-
-            // Read and return the response body
-            return response.body().string();
-        } catch (IOException e) {
+            return response.body();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return "An error occurred: " + e.getMessage();
         }
     }
+
 
     public void addComment(){
 

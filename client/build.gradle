@@ -43,7 +43,7 @@ dependencies {
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-  implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+  implementation 'org.apache.httpcomponents:httpclient:4.5.13'
 
 }
 

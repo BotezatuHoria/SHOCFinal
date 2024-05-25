@@ -17,7 +17,7 @@
       <TextArea fx:id="inputBox" layoutX="57.0" layoutY="62.0" onKeyTyped="#showSize" prefHeight="410.0" prefWidth="390.0" />
       <TextArea fx:id="outputBox" layoutX="571.0" layoutY="62.0" prefHeight="410.0" prefWidth="390.0" />
         <Line endX="472.66668701171875" endY="663.0" layoutX="35.0" layoutY="1.0" startX="472.6666564941406" startY="-1.52587890625E-5" />
-        <Button fx:id="infopoint" layoutX="25.0" layoutY="14.0" mnemonicParsing="false">
+        <Button fx:id="infopoint" layoutX="17.0" layoutY="14.0" mnemonicParsing="false">
             <graphic>
                 <ImageView fx:id="infopointPicture" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                     <image>

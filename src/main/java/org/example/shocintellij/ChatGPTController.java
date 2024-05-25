@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ChatGPTController {
     public static final String apiKey = "sk-proj-W8B5lUA5vZgj4QwcKQCsT3BlbkFJ0F5aX0Zuh91G1BT9hari";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    @GetMapping("/api/gpt/isTestable")
+    @GetMapping("/api/gpt/translateRo")
     public ResponseEntity<String> getTranslationInRomanian(@org.springframework.web.bind.annotation.RequestBody String code)
     {
         String systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the Romanian language.";
@@ -34,6 +34,7 @@ public class ChatGPTController {
         if(ans==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(ans);
+
 
     }
     //@GetMapping("/api/gpt")

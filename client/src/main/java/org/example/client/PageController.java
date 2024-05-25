@@ -86,7 +86,7 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-            outputBox.setText("");
+     outputBox.setText("");
             if (testability.isSelected())
               outputBox.setText(checkTestability(inputBox.getText().trim()));
             if (complexity.isSelected())
@@ -118,6 +118,26 @@ public class PageController {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SERVER + "api/gpt/complexity"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
+        }
+    }
+
+    public String getCodeExplanation(String code) {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/codeExplanation"))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

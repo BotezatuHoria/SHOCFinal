@@ -5,7 +5,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
-
 public class PageController {
 
     @FXML
@@ -58,6 +57,8 @@ public class PageController {
 
     }
     public boolean checkOptions() {
+
+      //  ceva();
         if (inputBox.getText().length() > 2000) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Nu merge boss");
@@ -73,6 +74,26 @@ public class PageController {
         }
         return true;
     }
+//    public void ceva()
+//    {
+//        System.out.println("dad");
+//        CloseableHttpClient httpClient = HttpClients.createDefault();
+//
+//        // Create a GET request
+//        HttpGet request = new HttpGet("https://api.example.com/data");
+//
+//        // Execute the request
+//        HttpResponse response = httpClient.execute(request);
+//
+//        // Read the response
+//        String responseBody = EntityUtils.toString(response.getEntity());
+//
+//        // Print the response
+//        System.out.println(responseBody);
+//
+//        // Close the HttpClient
+//        httpClient.close();
+//    }
 
     public void sendRequest() {
         if (checkOptions()) {

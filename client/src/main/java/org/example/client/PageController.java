@@ -4,7 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Line;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class PageController {
 
@@ -37,6 +42,8 @@ public class PageController {
 
     @FXML
     private RadioButton testability;
+
+    private static String SERVER = "http://localhost:8080/";
 
     public void initialize(){
         ToggleGroup toggleGroup=new ToggleGroup();
@@ -76,8 +83,27 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-            // call to server utils
+            outputBox.setText(checkTestability("Romanian", inputBox.getText().trim()));
+        }
+    }
 
+    public String checkTestability(String language, String code) {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/translate?lang=" + language))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
         }
     }
 

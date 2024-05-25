@@ -1,39 +1,66 @@
 package org.example.client;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class PageController {
 
     @FXML
-    AnchorPane pane;
+    private RadioButton checkCode;
 
     @FXML
-    TextField inputBox;
+    private RadioButton complexity;
 
     @FXML
-    TextField outputBox;
+    private Button enterButton;
 
     @FXML
-    Button infopoint;
+    private Button infopoint;
 
     @FXML
-    Button enterButton;
+    private ImageView infopointPicture;
 
     @FXML
-    RadioButton checkCode;
+    private TextArea inputBox;
 
     @FXML
-    RadioButton complexity;
+    private TextArea outputBox;
 
     @FXML
-    RadioButton testability;
+    private Label size;
+
+    @FXML
+    private AnchorPane pane;
+
+    @FXML
+    private RadioButton testanblity;
 
     public void sendText(){
         String text=inputBox.getText();
         //send to gpt
+    }
+
+    public void showSize() {
+        String sizeLabel = "";
+        sizeLabel += inputBox.getText().length();
+        size.setText(sizeLabel + "/2000");
+
+    }
+    public boolean checkOptions() {
+        if (inputBox.getText().length() > 2000) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Nu merge boss");
+            return false;
+        }
+        return true;
+    }
+
+    public void sendRequest() {
+        if (checkOptions()) {
+            // call to server utils
+
+        }
     }
 }

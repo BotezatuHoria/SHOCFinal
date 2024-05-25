@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 
 public class PageController {
 
@@ -35,7 +36,15 @@ public class PageController {
     private AnchorPane pane;
 
     @FXML
-    private RadioButton testanblity;
+    private RadioButton testability;
+
+    public void initialize(){
+        ToggleGroup toggleGroup=new ToggleGroup();
+        checkCode.setToggleGroup(toggleGroup);
+        complexity.setToggleGroup(toggleGroup);
+        testability.setToggleGroup(toggleGroup);
+        //toggleGroup.getSelectedToggle().selectedProperty();
+    }
 
     public void sendText(){
         String text=inputBox.getText();
@@ -52,6 +61,14 @@ public class PageController {
         if (inputBox.getText().length() > 2000) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Nu merge boss");
+            alert.showAndWait();
+            return false;
+        }
+        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected())){
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No option selected!");
+            alert.setContentText("You need to select one of the available options!");
+            alert.showAndWait();
             return false;
         }
         return true;

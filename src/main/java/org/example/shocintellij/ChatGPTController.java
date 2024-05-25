@@ -51,8 +51,6 @@ public class ChatGPTController {
         if(ans == null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(ans);
-
-
     }
 
     @PostMapping("/api/gpt/complexity")
@@ -70,9 +68,20 @@ public class ChatGPTController {
         if(ans==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(ans);
-
-
     }
+
+    @PostMapping("/api/gpt/codeExplanation")
+    public ResponseEntity<String> getCodeExplanation(@org.springframework.web.bind.annotation.RequestBody String code)
+    {
+        String systemText = "For this conversation, act like a senior software engineer/developer," +
+                " with a master's degree in Computer Science and Engineering. ";
+        String question = "Describe what this code does. Try to analyse it step by step a bit. Keep the explanation concise. Do not write any code. If the code implements a specific known algorithm such as djikstra, kruskal or merge sort, also specify which one it implements.";
+        String ans = askChatGpt(systemText,question,code);
+        if(ans == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(ans);
+    }
+
     //@GetMapping("/api/gpt")
     public String askChatGpt(String systemText, String question,String code) {
         OkHttpClient client = new OkHttpClient();

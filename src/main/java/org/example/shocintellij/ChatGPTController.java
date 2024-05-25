@@ -88,18 +88,7 @@ public class ChatGPTController {
         List<Role> roleList=new ArrayList<>();
         roleList.add(new Role("system",systemText));
         roleList.add(new Role("user",question+code));
-        JamilaSON jamilaSON=new JamilaSON("gpt-4o",roleList,2000);
-        String code2 = code.replace("\"", "\\\"");
-//        String json ="{\n" +
-//                "    \"model\": \"gpt-4o\",\n" +
-//                "    \"messages\":[\n" +
-//                "    {\"role\": \"system\", \"content\": \""+systemText+"\"},\n" +
-//                "    {\"role\": \"user\", \"content\": \""+question+code2+"\"\n" +
-//             //   "    {\"role\": \"user\", \"content\": \""+question+"String systemText=\"You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the Romanian language.\"\n" +
-//                "    }\n" +
-//                "  ],\n" +
-//                "    \"max_tokens\": 2000\n" +
-//                "}";
+        JamilaSON jamilaSON=new JamilaSON("gpt-4o",roleList,3000);
         ObjectMapper mapper = new ObjectMapper();
         String json="";
         RequestBody body;

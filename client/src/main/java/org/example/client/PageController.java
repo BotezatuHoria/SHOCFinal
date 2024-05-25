@@ -4,7 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Line;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 public class PageController {
 
     @FXML
@@ -37,6 +43,8 @@ public class PageController {
     @FXML
     private RadioButton testability;
 
+    private static String SERVER = "http://localhost:8080/";
+
     public void initialize(){
         ToggleGroup toggleGroup=new ToggleGroup();
         checkCode.setToggleGroup(toggleGroup);
@@ -57,8 +65,6 @@ public class PageController {
 
     }
     public boolean checkOptions() {
-
-      //  ceva();
         if (inputBox.getText().length() > 2000) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Nu merge boss");
@@ -74,31 +80,30 @@ public class PageController {
         }
         return true;
     }
-//    public void ceva()
-//    {
-//        System.out.println("dad");
-//        CloseableHttpClient httpClient = HttpClients.createDefault();
-//
-//        // Create a GET request
-//        HttpGet request = new HttpGet("https://api.example.com/data");
-//
-//        // Execute the request
-//        HttpResponse response = httpClient.execute(request);
-//
-//        // Read the response
-//        String responseBody = EntityUtils.toString(response.getEntity());
-//
-//        // Print the response
-//        System.out.println(responseBody);
-//
-//        // Close the HttpClient
-//        httpClient.close();
-//    }
 
     public void sendRequest() {
         if (checkOptions()) {
-            // call to server utils
+            outputBox.setText(checkTestability(inputBox.getText().trim()));
+        }
+    }
 
+    public String checkTestability(String code) {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/translate"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
         }
     }
 

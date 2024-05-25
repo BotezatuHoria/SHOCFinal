@@ -5,6 +5,7 @@ module org.example.client {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.net.http;
 
     opens org.example.client to javafx.fxml;
     exports org.example.client;

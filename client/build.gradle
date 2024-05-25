@@ -44,6 +44,7 @@ dependencies {
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+  implementation 'org.apache.httpcomponents:httpclient:4.5.13'
 }
 
 test {

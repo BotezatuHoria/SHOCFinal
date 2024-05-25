@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Line;
+import okhttp3.*;
+
+import java.io.IOException;
 
 public class PageController {
 
@@ -37,6 +39,8 @@ public class PageController {
 
     @FXML
     private RadioButton testability;
+
+    private static String SERVER = "http://localhost:8080/";
 
     public void initialize(){
         ToggleGroup toggleGroup=new ToggleGroup();
@@ -76,8 +80,33 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-            // call to server utils
+            outputBox.setText(checkTestability(inputBox.getText().trim()));
+        }
+    }
 
+
+    public String checkTestability(String code) {
+        OkHttpClient client = new OkHttpClient();
+
+        // Properly format the JSON string
+        String json = "{\"code\": \"" + code + "\"}";
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(SERVER + "/api/gpt/translateRo")
+                .post(requestBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            // Read and return the response body
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
         }
     }
 }

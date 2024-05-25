@@ -42,6 +42,8 @@ public class PageController {
 
     @FXML
     private RadioButton testability;
+    @FXML
+    private RadioButton translate;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -50,6 +52,7 @@ public class PageController {
         checkCode.setToggleGroup(toggleGroup);
         complexity.setToggleGroup(toggleGroup);
         testability.setToggleGroup(toggleGroup);
+        translate.setToggleGroup(toggleGroup);
         //toggleGroup.getSelectedToggle().selectedProperty();
     }
 
@@ -71,7 +74,7 @@ public class PageController {
             alert.showAndWait();
             return false;
         }
-        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected())){
+        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected() || translate.isSelected())){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No option selected!");
             alert.setContentText("You need to select one of the available options!");
@@ -83,18 +86,38 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-            if(testability.isSelected())
-                outputBox.setText(checkTestability("Romanian", inputBox.getText().trim()));
-            else
-                if(checkCode.isSelected())
-                    outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
+     outputBox.setText("");
+            if (testability.isSelected())
+              outputBox.setText(checkTestability(inputBox.getText().trim()));
+            if (complexity.isSelected())
+              outputBox.setText(checkComplexity(inputBox.getText().trim()));
         }
     }
 
-    public String checkTestability(String language, String code) {
+    public String checkTestability(String code) {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER + "api/gpt/translate?lang=" + language))
+                .uri(URI.create(SERVER + "api/gpt/testability"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
+        }
+    }
+
+    public String checkComplexity(String code) {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/complexity"))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

@@ -45,6 +45,9 @@ public class PageController {
     @FXML
     private RadioButton translate;
 
+    @FXML
+    private RadioButton addCommentary;
+
     private static String SERVER = "http://localhost:8080/";
 
     public void initialize(){
@@ -93,7 +96,8 @@ public class PageController {
               outputBox.setText(checkComplexity(inputBox.getText().trim()));
             if(translate.isSelected())
                 outputBox.setText(translateCode(inputBox.getText().trim()));
-
+            if(checkCode.isSelected())
+                outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
         }
     }
 
@@ -177,6 +181,9 @@ public class PageController {
     }
 
     public void addComment(){
-
+        if(addCommentary.isSelected()) {
+            String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
+            inputBox.setText(codeWithComments);
+        }
     }
 }

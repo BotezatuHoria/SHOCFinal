@@ -27,7 +27,7 @@
             </graphic>
         </Button>
         <Button fx:id="enterButton" layoutX="371.0" layoutY="564.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="32.0" prefWidth="80.0" text="Enter" />
-        <Button fx:id="addButton" layoutX="885.0" layoutY="490.0" mnemonicParsing="false" onAction="#addCommentary" prefHeight="20.0" prefWidth="66.0" text="Add" />
+        <Button fx:id="addButton" layoutX="885.0" layoutY="490.0" mnemonicParsing="false" onAction="#addComment" prefHeight="20.0" prefWidth="66.0" text="Add" />
       <VBox layoutX="71.0" layoutY="495.0" prefHeight="106.0" prefWidth="167.0">
          <children>
               <RadioButton fx:id="checkCode" mnemonicParsing="false" text="Check what it does">

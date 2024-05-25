@@ -109,4 +109,8 @@ public class PageController {
             return "An error occurred: " + e.getMessage();
         }
     }
+
+    public void addComment(){
+
+    }
 }

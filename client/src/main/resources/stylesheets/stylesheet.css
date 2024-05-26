@@ -3,12 +3,17 @@
 
 }
 
-#inputBox, #outputBox, #textArea{
+#inputBox, #outputBox, #textArea1{
     -fx-control-inner-background: #2a2828;
     -fx-prompt-text-fill: #b9b4b4;
     -fx-text-fill: #b9b4b4;
 }
-
+#textAreaa
+{
+    -fx-control-inner-background: #000000;
+    -fx-prompt-text-fill: #000000;
+    -fx-text-fill: #000000;
+}
 #enterButton, #infopoint, #addButton{
     -fx-background-color: #2a2828;
     -fx-text-fill: #b9b4b4;

@@ -10,9 +10,8 @@ public class InfopointController {
     TextArea textArea;
 
     public void initialize(){
-        textArea.setStyle("-fx-control-inner-background: #2a2828");
-        textArea.setStyle("-fx-background-color: #2a2828");
-        textArea.setDisable(true);
+        textArea.setStyle("-fx-background-color: #2a2828;-fx-control-inner-background: #2a2828");
+        textArea.setEditable(false);
         textArea.setText("This tool is here to help you more profoundly understand confusing code! \n" +
                 "\n It helps developers, especially reviewers, improve the quality of the production code.\n" +
                 "\n" +

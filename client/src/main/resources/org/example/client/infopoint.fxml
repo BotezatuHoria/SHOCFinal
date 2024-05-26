@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="402.0" prefWidth="558.0" stylesheets="@../../../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.InfopointController">
+<AnchorPane prefHeight="402.0" prefWidth="558.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.InfopointController">
    <children>
-      <TextArea fx:id="textArea" prefHeight="402.0" prefWidth="558.0" stylesheets="@../../../stylesheets/stylesheet.css" />
+      <TextArea fx:id="textArea" prefHeight="402.0" prefWidth="558.0"  />
    </children>
 </AnchorPane>

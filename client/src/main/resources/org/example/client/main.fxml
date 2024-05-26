@@ -13,15 +13,18 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="1016.0" stylesheets="@../../../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.PageController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="1500.0" stylesheets="@../../../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.PageController">
     <children>
-      <TextArea fx:id="inputBox" layoutX="71.0" layoutY="73.0" onKeyTyped="#showSize" prefHeight="410.0" prefWidth="380.0" promptText="Input your code here...">
+      <TextArea fx:id="inputBox" layoutX="51.0" layoutY="73.0" onKeyTyped="#showSize" prefHeight="410.0" prefWidth="646.0" promptText="Input your code here..." wrapText="true">
          <font>
             <Font size="14.0" />
          </font></TextArea>
-      <TextArea fx:id="outputBox" layoutX="572.0" layoutY="73.0" prefColumnCount="70" prefHeight="410.0" prefWidth="380.0" />
-        <Line endX="472.6666259765625" endY="692.5999755859375" layoutX="35.0" layoutY="-36.0" startX="472.6666564941406" startY="-1.52587890625E-5" />
-        <Button fx:id="infopoint" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#openInfopoint">
+      <TextArea fx:id="outputBox" editable="false" layoutX="805.0" layoutY="73.0" prefColumnCount="3" prefHeight="410.0" prefWidth="646.0" scrollLeft="-1.0" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font></TextArea>
+        <Line endX="472.6666259765625" endY="657.0" layoutX="278.0" layoutY="1.0" startX="472.6666564941406" startY="-1.52587890625E-5" />
+        <Button fx:id="infopoint" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#openInfopoint">
             <graphic>
                 <ImageView fx:id="infopointPicture" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -30,9 +33,9 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="enterButton" layoutX="371.0" layoutY="564.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="32.0" prefWidth="80.0" text="Enter" />
-        <Button fx:id="addButton" layoutX="885.0" layoutY="490.0" mnemonicParsing="false" onAction="#addComment" prefHeight="20.0" prefWidth="66.0" text="Add" />
-      <VBox layoutX="71.0" layoutY="495.0" prefHeight="124.0" prefWidth="161.0">
+        <Button fx:id="enterButton" layoutX="617.0" layoutY="513.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="32.0" prefWidth="80.0" text="Enter" />
+        <Button fx:id="addButton" layoutX="1384.0" layoutY="503.0" mnemonicParsing="false" onAction="#addComment" prefHeight="20.0" prefWidth="66.0" text="Add" />
+      <VBox layoutX="51.0" layoutY="495.0" prefHeight="124.0" prefWidth="143.0">
          <children>
               <RadioButton fx:id="checkCode" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Check what it does">
                <font>
@@ -73,18 +76,18 @@
             </RadioButton>
          </children>
       </VBox>
-      <Label fx:id="size" alignment="CENTER_RIGHT" layoutX="320.0" layoutY="483.0" prefHeight="6.0" prefWidth="130.0" text="0/2000">
+      <Label fx:id="size" alignment="CENTER_RIGHT" layoutX="566.0" layoutY="485.0" prefHeight="6.0" prefWidth="130.0" text="0/2000">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
       </Label>
-      <RadioButton fx:id="addCommentary" layoutX="572.0" layoutY="493.0" mnemonicParsing="false" text="Add as commentary to the code">
+      <RadioButton fx:id="addComment" layoutX="1134.0" layoutY="503.0" mnemonicParsing="false" text="Add as commentary to the code">
          <font>
             <Font size="14.0" />
          </font>
       </RadioButton>
       <TextField fx:id="selectedLanguage" layoutX="221.0" layoutY="570.0" prefHeight="20.0" prefWidth="130.0" />
-      <VBox fx:id="correctionOpt" layoutX="221.0" layoutY="541.0" prefHeight="78.0" prefWidth="143.0">
+      <VBox fx:id="correctionOpt" layoutX="207.0" layoutY="541.0" prefHeight="78.0" prefWidth="143.0">
          <children>
             <RadioButton fx:id="hints" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Hints">
                <font>
@@ -94,7 +97,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="broadAnswer" mnemonicParsing="false" prefHeight="20.0" prefWidth="148.0" text="Broad answer">
+            <RadioButton fx:id="broadAnswer" mnemonicParsing="false" prefHeight="20.0" prefWidth="149.0" text="Broad answer">
                <font>
                   <Font size="14.0" />
                </font>
@@ -112,11 +115,13 @@
             </RadioButton>
          </children>
       </VBox>
-      <Button fx:id="copyButton" layoutX="371.0" layoutY="30.0" mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="32.0" prefWidth="80.0" text="Copy" />
-      <ImageView fx:id="loadingAnim" fitHeight="150.0" fitWidth="200.0" layoutX="662.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../imgs/LoadingAnimation.gif" />
-         </image>
-      </ImageView>
+      <Button fx:id="copyButton" layoutX="657.0" layoutY="30.0" mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="26.0" prefWidth="39.0">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../imgs/copy.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
     </children>
 </AnchorPane>

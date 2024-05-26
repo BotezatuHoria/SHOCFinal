@@ -5,10 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
+
+import java.awt.*;
+import java.awt.datatransfer.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -75,6 +82,9 @@ public class PageController {
 
     @FXML
     private VBox correctionOpt;
+
+    @FXML
+    private Button copyButton;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -271,6 +281,14 @@ public class PageController {
             String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
             inputBox.setText(codeWithComments);
         }
+    }
+
+    public void copyToClipboard() {
+        StringSelection stringSelection = new StringSelection(inputBox.getText().trim());
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        clipboard.setContents(stringSelection, null);
     }
 
     public void openInfopoint() throws IOException {

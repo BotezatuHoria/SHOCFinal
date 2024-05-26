@@ -32,9 +32,8 @@ public class ChatGPTController {
                 "Also, if the code implements a known algorithm (ex. dijkstra, kruskal, binary search) also mention the algorithm.";
         String question = "";
         switch (type) {
-            case "hint" -> question = "Please give me some hints related of the errors that I encounter in my code";
-            case "explanation" -> question = "Please give me a broad explanation related to the errors that I encounter in my code, but do not add any code snippets.";
-            case "complete" -> question = "Please give me an explanation about the errors that I might have in this code";
+            case "hint" -> question = "Please give me some very short hints related to the errors that I encounter in my code. Keep it short. Keep it concise and short";
+            case "explanation" -> question = "Please give me a broad explanation related to the errors that I encounter in my code, but do not add any code snippets. But keep it short and do not explain too much";
         }
         String ans = askChatGpt(systemText,question,code);
         if(ans == null)

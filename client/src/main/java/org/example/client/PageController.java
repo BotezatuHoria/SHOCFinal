@@ -128,7 +128,8 @@ public class PageController {
 
         if (inputBox.getText().length() > 2000) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Nu merge boss");
+            alert.setTitle("Character limit exceeded");
+            alert.setContentText("Your input message has too many characters. Please limit to 2000 characters");
             alert.showAndWait();
             return false;
         }
@@ -270,6 +271,11 @@ public class PageController {
         if(addCommentary.isSelected()) {
             String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
             inputBox.setText(codeWithComments);
+        }else{
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No selection");
+            alert.setContentText("Please select the radio button");
+            alert.showAndWait();
         }
     }
 

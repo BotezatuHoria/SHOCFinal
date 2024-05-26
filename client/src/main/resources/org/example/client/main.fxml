@@ -15,7 +15,10 @@
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="1016.0" stylesheets="@../../../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.PageController">
     <children>
-      <TextArea fx:id="inputBox" layoutX="71.0" layoutY="73.0" onKeyTyped="#showSize" prefHeight="410.0" prefWidth="380.0" promptText="Input your code here..." />
+      <TextArea fx:id="inputBox" layoutX="71.0" layoutY="73.0" onKeyTyped="#showSize" prefHeight="410.0" prefWidth="380.0" promptText="Input your code here...">
+         <font>
+            <Font size="14.0" />
+         </font></TextArea>
       <TextArea fx:id="outputBox" layoutX="572.0" layoutY="73.0" prefColumnCount="70" prefHeight="410.0" prefWidth="380.0" />
         <Line endX="472.6666259765625" endY="692.5999755859375" layoutX="35.0" layoutY="-36.0" startX="472.6666564941406" startY="-1.52587890625E-5" />
         <Button fx:id="infopoint" layoutX="25.0" layoutY="14.0" mnemonicParsing="false" onAction="#openInfopoint">

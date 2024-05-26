@@ -65,6 +65,10 @@ public class PageController {
         //toggleGroup.getSelectedToggle().selectedProperty();
         translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
+            selectedLanguage.setPromptText("Language...");
+            selectedLanguage.setStyle("-fx-font-size: 14px; -fx-prompt-text-fill: #2a2828; -fx-translate-y: -2px");
+
+
         });
     }
 

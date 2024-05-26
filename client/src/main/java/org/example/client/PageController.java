@@ -1,9 +1,15 @@
 package org.example.client;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,6 +20,15 @@ import java.net.http.HttpResponse;
 public class PageController {
 
     @FXML
+    private Button addButton;
+
+    @FXML
+    private RadioButton addCommentary;
+
+    @FXML
+    private RadioButton broadAnswer;
+
+    @FXML
     private RadioButton checkCode;
 
     @FXML
@@ -21,6 +36,15 @@ public class PageController {
 
     @FXML
     private Button enterButton;
+
+    @FXML
+    private RadioButton errorCorrection;
+
+    @FXML
+    private RadioButton explanation;
+
+    @FXML
+    private RadioButton hints;
 
     @FXML
     private Button infopoint;
@@ -35,15 +59,22 @@ public class PageController {
     private TextArea outputBox;
 
     @FXML
-    private Label size;
-
-    @FXML
     private AnchorPane pane;
 
     @FXML
+    private TextField selectedLanguage;
+
+    @FXML
+    private Label size;
+
+    @FXML
     private RadioButton testability;
+
     @FXML
     private RadioButton translate;
+
+    @FXML
+    private VBox correctionOpt;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -53,7 +84,27 @@ public class PageController {
         complexity.setToggleGroup(toggleGroup);
         testability.setToggleGroup(toggleGroup);
         translate.setToggleGroup(toggleGroup);
+        errorCorrection.setToggleGroup(toggleGroup);
+        correctionOpt.setVisible(false);
+        selectedLanguage.setVisible(false);
         //toggleGroup.getSelectedToggle().selectedProperty();
+        translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
+            selectedLanguage.setPromptText("Language...");
+            selectedLanguage.setStyle("-fx-font-size: 14px; -fx-prompt-text-fill: #2a2828; -fx-translate-y: -2px");
+
+
+        });
+        errorCorrection.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            hints.selectedProperty().set(false);
+            broadAnswer.selectedProperty().set(false);
+            explanation.selectedProperty().set(false);
+            correctionOpt.setVisible(newValue);
+            ToggleGroup toggle = new ToggleGroup();
+            hints.setToggleGroup(toggle);
+            broadAnswer.setToggleGroup(toggle);
+            explanation.setToggleGroup(toggle);
+        });
     }
 
     public void sendText(){
@@ -68,6 +119,13 @@ public class PageController {
 
     }
     public boolean checkOptions() {
+        if(inputBox.getText().length()==0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Input box is empty");
+            alert.showAndWait();
+            return false;
+        }
+
         if (inputBox.getText().length() > 2000) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Nu merge boss");
@@ -93,7 +151,11 @@ public class PageController {
               outputBox.setText(checkComplexity(inputBox.getText().trim()));
             if(translate.isSelected())
                 outputBox.setText(translateCode(inputBox.getText().trim()));
-
+            if(checkCode.isSelected())
+                outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
+            if (errorCorrection.isSelected()) {
+                ///
+            }
         }
     }
 
@@ -138,8 +200,11 @@ public class PageController {
     }
     public String translateCode(String code)
     {
+        String lang="english";
+        if(selectedLanguage.getText()!=null)
+            lang=selectedLanguage.getText();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER + "api/gpt/translate"))
+                .uri(URI.create(SERVER + "api/gpt/translate?lang="+lang))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 
@@ -196,6 +261,18 @@ public class PageController {
     }
 
     public void addComment(){
+        if(addCommentary.isSelected()) {
+            String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
+            inputBox.setText(codeWithComments);
+        }
+    }
 
+    public void openInfopoint() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(InfopointController.class.getResource("infopoint.fxml"));
+        Stage stage=new Stage();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Infopoint");
+        stage.setScene(scene);
+        stage.show();
     }
 }

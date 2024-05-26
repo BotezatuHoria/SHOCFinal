@@ -128,5 +128,10 @@
                </image>
             </ImageView>
          </graphic></Button>
+        <ImageView fx:id="loadingAnim" fitHeight="87.0" fitWidth="224.0" layoutX="1022.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../imgs/LoadingAnimation.gif" />
+            </image>
+        </ImageView>
     </children>
 </AnchorPane>

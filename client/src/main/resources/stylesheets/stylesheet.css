@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
 #pane{
     -fx-background-color: linear-gradient(from 0% 100% to 100% 0%, rgba(54,47,163,1) 5%, rgba(200,78,158,1) 16%, rgba(218,119,80,1) 52%, rgba(218,140,110,1) 77%, rgba(34,20,123,1) 98%);
 
 }
 
 #inputBox, #outputBox{
+
     -fx-control-inner-background: #2a2828;
     -fx-prompt-text-fill: #b9b4b4;
     -fx-text-fill: #b9b4b4;
@@ -21,6 +24,7 @@
 }
 
 #selectedLanguage {
+
     -fx-background-color: rgba(255, 244, 244, 0.21);
     -fx-text-fill: #2a2828;
     -fx-padding: 0;

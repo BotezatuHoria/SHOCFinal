@@ -10,12 +10,17 @@
     -fx-font-family: "Roboto Mono", monospace;
     -fx-font-weight: 500;
     -fx-font-style: normal;
-    -fx-text-fill: #2a2828;
     -fx-control-inner-background: #2a2828;
+    -fx-prompt-text-fill: #b9b4b4;
     -fx-text-fill: #b9b4b4;
 }
-
-#enterButton, #infopoint, #addButton{
+#textAreaa
+{
+    -fx-control-inner-background: #000000;
+    -fx-prompt-text-fill: #000000;
+    -fx-text-fill: #000000;
+}
+#enterButton, #infopoint, #addButton, #copyButton{
     -fx-background-color: #2a2828;
     -fx-text-fill: #b9b4b4;
     -fx-font-family: "Be Vietnam Pro", sans-serif;
@@ -23,10 +28,17 @@
     -fx-font-style: normal;
 }
 
-#checkCode, #complexity, #testability, #addComment{
+#checkCode, #complexity, #testability, #translate, #addComment, #errorCorrection, #explanation, #broadAnswer, #hints{
     -fx-background-color: rgba(255, 244, 244, 0.21);
     -fx-text-fill: #2a2828;
     -fx-font-family: "Be Vietnam Pro", sans-serif;
     -fx-font-weight: 300;
     -fx-font-style: normal;
+}
+
+#selectedLanguage {
+    -fx-background-color: rgba(255, 244, 244, 0.21);
+    -fx-text-fill: #2a2828;
+    -fx-padding: 0;
+    -fx-background-radius: 0;
 }

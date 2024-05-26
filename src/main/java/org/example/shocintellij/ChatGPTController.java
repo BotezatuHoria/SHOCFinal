@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @RestController
 public class ChatGPTController {
@@ -24,10 +22,30 @@ public class ChatGPTController {
     public static final String apiKey = "sk-proj-W8B5lUA5vZgj4QwcKQCsT3BlbkFJ0F5aX0Zuh91G1BT9hari";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
+    @PostMapping("/api/gpt/errors")
+    public ResponseEntity<String> getErrorCorrection(@org.springframework.web.bind.annotation.RequestBody String code, @RequestParam("type")String type) {
+        String systemText = "For this conversation, act like a senior software engineer/developer," +
+                " with a master's degree in Computer Science and Engineering. Your job is to check the code out for any errors " +
+                "and provide the user with one of these 3 options: 1. hints, " +
+                "2. a more in depth explanation, but without adding the code with the solution, " +
+                "3. a full in depth explanation and the code for this solution." +
+                "Also, if the code implements a known algorithm (ex. djikstra, kruskal, binary search) also mention the algorithm.";
+        String question = "";
+        switch (type) {
+            case "hint" -> question = "Please give me some hints related of the errors that I encounter in my code";
+            case "explanation" -> question = "Please give me a broad explanation related to the errors that I encounter in my code, but do not add any code snippets.";
+            case "complete" -> question = "Please give me an explanation about the errors that I might have in this code";
+        }
+        String ans = askChatGpt(systemText,question,code);
+        if(ans == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(ans);
+    }
+
     @PostMapping("/api/gpt/translate")
     public ResponseEntity<String> getTranslationInLang(@RequestParam("lang")String lang, @org.springframework.web.bind.annotation.RequestBody String code)
     {
-        String systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the "+lang+" language.";
+        String systemText="You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the "+lang+" language. Keep the answer short";
         String question="Your single job is to translate everything from this code into "+lang+". But make sure the code still work. Don't say anything besides the code, just say the code but translated in "+lang+". The code is: ";
         String ans=askChatGpt(systemText,question,code);
         if(ans==null)
@@ -45,14 +63,12 @@ public class ChatGPTController {
                 "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
                 "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
-                "do not detect the input as code, please indicate that by saying it is not a valid input";
+                "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
         String question = "Check the testability of this code. Also try to include how much of the code can be covered by tests and the aspects that make it testable or the ones that can be improved. Try to be concise.";
         String ans = askChatGpt(systemText,question,code);
         if(ans == null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(ans);
-
-
     }
 
     @PostMapping("/api/gpt/complexity")
@@ -64,33 +80,33 @@ public class ChatGPTController {
                 "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
                 "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
-                "do not detect the input as code, please indicate that by saying it is not a valid input";
+                "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
         String question = "Calculate the complexity of the following code. Try to analyse it a bit and see if it can be further optimized. Keep the explanation concise. The complexity does not need to be fully broken down.";
         String ans=askChatGpt(systemText,question,code);
         if(ans==null)
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(ans);
-
-
     }
+
+    @PostMapping("/api/gpt/codeExplanation")
+    public ResponseEntity<String> getCodeExplanation(@org.springframework.web.bind.annotation.RequestBody String code)
+    {
+        String systemText = "For this conversation, act like a senior software engineer/developer," +
+                " with a master's degree in Computer Science and Engineering. Keep the answer short";
+        String question = "Describe what this code does. Try to analyse it step by step a bit. Keep the explanation concise. Do not write any code. If the code implements a specific known algorithm such as djikstra, kruskal or merge sort, also specify which one it implements. Keep the answer short";
+        String ans = askChatGpt(systemText,question,code);
+        if(ans == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(ans);
+    }
+
     //@GetMapping("/api/gpt")
     public String askChatGpt(String systemText, String question,String code) {
         OkHttpClient client = new OkHttpClient();
         List<Role> roleList=new ArrayList<>();
         roleList.add(new Role("system",systemText));
         roleList.add(new Role("user",question+code));
-        JamilaSON jamilaSON=new JamilaSON("gpt-4o",roleList,2000);
-        String code2 = code.replace("\"", "\\\"");
-//        String json ="{\n" +
-//                "    \"model\": \"gpt-4o\",\n" +
-//                "    \"messages\":[\n" +
-//                "    {\"role\": \"system\", \"content\": \""+systemText+"\"},\n" +
-//                "    {\"role\": \"user\", \"content\": \""+question+code2+"\"\n" +
-//             //   "    {\"role\": \"user\", \"content\": \""+question+"String systemText=\"You are a highly appreciated and intelligent professor in Computer Science with a Master's in competitive programming that knows very well the Romanian language.\"\n" +
-//                "    }\n" +
-//                "  ],\n" +
-//                "    \"max_tokens\": 2000\n" +
-//                "}";
+        JamilaSON jamilaSON=new JamilaSON("gpt-4o",roleList,3000);
         ObjectMapper mapper = new ObjectMapper();
         String json="";
         RequestBody body;

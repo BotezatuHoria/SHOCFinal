@@ -87,6 +87,13 @@ public class PageController {
 
     }
     public boolean checkOptions() {
+        if(inputBox.getText().length()==0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Input box is empty");
+            alert.showAndWait();
+            return false;
+        }
+
         if (inputBox.getText().length() > 2000) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Nu merge boss");

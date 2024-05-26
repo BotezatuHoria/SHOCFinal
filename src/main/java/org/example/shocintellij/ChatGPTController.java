@@ -14,15 +14,33 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @RestController
 public class ChatGPTController {
 
     public static final String apiKey = "sk-proj-W8B5lUA5vZgj4QwcKQCsT3BlbkFJ0F5aX0Zuh91G1BT9hari";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+    @PostMapping("/api/gpt/errors")
+    public ResponseEntity<String> getErrorCorrection(@org.springframework.web.bind.annotation.RequestBody String code, @RequestParam("type")String type) {
+        String systemText = "For this conversation, act like a senior software engineer/developer," +
+                " with a master's degree in Computer Science and Engineering. Your job is to check the code out for any errors " +
+                "and provide the user with one of these 3 options: 1. hints, " +
+                "2. a more in depth explanation, but without adding the code with the solution, " +
+                "3. a full in depth explanation and the code for this solution." +
+                "Also, if the code implements a known algorithm (ex. djikstra, kruskal, binary search) also mention the algorithm.";
+        String question = "";
+        switch (type) {
+            case "hint" -> question = "Please give me some hints related of the errors that I encounter in my code";
+            case "explanation" -> question = "Please give me an explanation related to the errors that I encounter in my code, but do not add any code snippets.";
+            case "complete" -> question = "Please give a full in depth explanation about the errors that I might have in this code, and also add a coding solution.";
+        }
+        String ans = askChatGpt(systemText,question,code);
+        if(ans == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(ans);
+    }
 
     @PostMapping("/api/gpt/translate")
     public ResponseEntity<String> getTranslationInLang(@RequestParam("lang")String lang, @org.springframework.web.bind.annotation.RequestBody String code)
@@ -88,7 +106,7 @@ public class ChatGPTController {
         List<Role> roleList=new ArrayList<>();
         roleList.add(new Role("system",systemText));
         roleList.add(new Role("user",question+code));
-        JamilaSON jamilaSON=new JamilaSON("gpt-4o",roleList,2000);
+        JamilaSON jamilaSON=new JamilaSON("gpt-4o",roleList,3000);
         String code2 = code.replace("\"", "\\\"");
 //        String json ="{\n" +
 //                "    \"model\": \"gpt-4o\",\n" +

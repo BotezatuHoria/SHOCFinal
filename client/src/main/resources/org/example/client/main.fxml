@@ -86,8 +86,8 @@
             <Font size="14.0" />
          </font>
       </RadioButton>
-      <TextField fx:id="selectedLanguage" layoutX="221.0" layoutY="570.0" prefHeight="20.0" prefWidth="130.0" />
-      <VBox fx:id="correctionOpt" layoutX="207.0" layoutY="541.0" prefHeight="78.0" prefWidth="143.0">
+      <TextField fx:id="selectedLanguage" layoutX="208.0" layoutY="570.0" prefHeight="20.0" prefWidth="143.0" />
+      <VBox fx:id="correctionOpt" layoutX="207.0" layoutY="561.0" prefHeight="57.0" prefWidth="143.0">
          <children>
             <RadioButton fx:id="hints" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Hints">
                <font>
@@ -105,15 +105,10 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="explanation" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Explanation">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </RadioButton>
          </children>
+         <padding>
+            <Insets top="4.0" />
+         </padding>
       </VBox>
       <Button fx:id="copyButton" layoutX="657.0" layoutY="30.0" mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="26.0" prefWidth="39.0">
          <graphic>

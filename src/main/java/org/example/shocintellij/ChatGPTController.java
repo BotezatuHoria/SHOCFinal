@@ -33,8 +33,8 @@ public class ChatGPTController {
         String question = "";
         switch (type) {
             case "hint" -> question = "Please give me some hints related of the errors that I encounter in my code";
-            case "explanation" -> question = "Please give me an explanation related to the errors that I encounter in my code, but do not add any code snippets.";
-            case "complete" -> question = "Please give a full in depth explanation about the errors that I might have in this code, and also add a coding solution.";
+            case "explanation" -> question = "Please give me a broad explanation related to the errors that I encounter in my code, but do not add any code snippets.";
+            case "complete" -> question = "Please give me an explanation about the errors that I might have in this code";
         }
         String ans = askChatGpt(systemText,question,code);
         if(ans == null)

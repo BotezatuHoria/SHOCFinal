@@ -227,8 +227,10 @@ public class PageController {
     public String translateCode(String code)
     {
         String lang="english";
-        if(selectedLanguage.getText()!=null)
-            lang=selectedLanguage.getText();
+        if(selectedLanguage.getText()!=null) {
+            lang = selectedLanguage.getText();
+            lang=lang.replace(" ","%20");
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SERVER + "api/gpt/translate?lang="+lang))
                 .POST(HttpRequest.BodyPublishers.ofString(code))

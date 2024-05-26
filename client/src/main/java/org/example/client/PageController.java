@@ -1,5 +1,6 @@
 package org.example.client;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -85,6 +86,8 @@ public class PageController {
 
     @FXML
     private Button copyButton;
+    @FXML
+    private ImageView loadingAnim;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -115,6 +118,7 @@ public class PageController {
             broadAnswer.setToggleGroup(toggle);
             explanation.setToggleGroup(toggle);
         });
+        loadingAnim.setVisible(false);
     }
 
     public void sendText(){
@@ -156,23 +160,56 @@ public class PageController {
 
     public void sendRequest() {
         if (checkOptions()) {
-     outputBox.setText("");
-            if (testability.isSelected())
-              outputBox.setText(checkTestability(inputBox.getText().trim()));
-            if (complexity.isSelected())
-              outputBox.setText(checkComplexity(inputBox.getText().trim()));
-            if(translate.isSelected())
-                outputBox.setText(translateCode(inputBox.getText().trim()));
-            if(checkCode.isSelected())
-                outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
-            if (errorCorrection.isSelected()) {
-                if (hints.isSelected())
-                    outputBox.setText(getErrors("hint", inputBox.getText().trim()));
-                if (broadAnswer.isSelected())
-                    outputBox.setText(getErrors("explanation", inputBox.getText().trim()));
-                if (explanation.isSelected())
-                    outputBox.setText(getErrors("complete", inputBox.getText().trim()));
-            }
+            outputBox.setText("");
+            //  loadingAnim.setVisible(true);
+
+            Platform.runLater(() -> loadingAnim.setVisible(true));
+            new Thread(() -> {
+                String responseText = "";
+                if (testability.isSelected())
+                    responseText = checkTestability(inputBox.getText().trim());
+                else if (complexity.isSelected())
+                    responseText = checkComplexity(inputBox.getText().trim());
+                else if (translate.isSelected())
+                    responseText = translateCode(inputBox.getText().trim());
+                else if (checkCode.isSelected())
+                    responseText = getCodeExplanation(inputBox.getText().trim());
+                else if (errorCorrection.isSelected()) {
+                    if (hints.isSelected())
+                        responseText = getErrors("hint", inputBox.getText().trim());
+                    if (broadAnswer.isSelected())
+                        responseText = getErrors("explanation", inputBox.getText().trim());
+                    if (explanation.isSelected())
+                        responseText = getErrors("complete", inputBox.getText().trim());
+                }
+
+                // Update UI with the response
+                String finalResponseText = responseText;
+                Platform.runLater(() -> {
+                    outputBox.setText(finalResponseText);
+                    loadingAnim.setVisible(false);
+                });
+            }).start();
+//            if (testability.isSelected())
+//              outputBox.setText(checkTestability(inputBox.getText().trim()));
+//            else
+//            if (complexity.isSelected())
+//              outputBox.setText(checkComplexity(inputBox.getText().trim()));
+//            else
+//            if(translate.isSelected())
+//                outputBox.setText(translateCode(inputBox.getText().trim()));
+//            else
+//            if(checkCode.isSelected())
+//                outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
+//            else
+//            if (errorCorrection.isSelected()) {
+//                if (hints.isSelected())
+//                    outputBox.setText(getErrors("hint", inputBox.getText().trim()));
+//                if (broadAnswer.isSelected())
+//                    outputBox.setText(getErrors("explanation", inputBox.getText().trim()));
+//                if (explanation.isSelected())
+//                    outputBox.setText(getErrors("complete", inputBox.getText().trim()));
+//            }
         }
     }
 

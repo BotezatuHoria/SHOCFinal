@@ -113,5 +113,10 @@
          </children>
       </VBox>
       <Button fx:id="copyButton" layoutX="371.0" layoutY="30.0" mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="32.0" prefWidth="80.0" text="Copy" />
+      <ImageView fx:id="loadingAnim" fitHeight="150.0" fitWidth="200.0" layoutX="662.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../imgs/LoadingAnimation.gif" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

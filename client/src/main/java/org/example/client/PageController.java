@@ -31,7 +31,7 @@ public class PageController {
     private Button addButton;
 
     @FXML
-    private RadioButton addCommentary;
+    private RadioButton addComment;
 
     @FXML
     private RadioButton broadAnswer;
@@ -190,26 +190,6 @@ public class PageController {
                     loadingAnim.setVisible(false);
                 });
             }).start();
-//            if (testability.isSelected())
-//              outputBox.setText(checkTestability(inputBox.getText().trim()));
-//            else
-//            if (complexity.isSelected())
-//              outputBox.setText(checkComplexity(inputBox.getText().trim()));
-//            else
-//            if(translate.isSelected())
-//                outputBox.setText(translateCode(inputBox.getText().trim()));
-//            else
-//            if(checkCode.isSelected())
-//                outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
-//            else
-//            if (errorCorrection.isSelected()) {
-//                if (hints.isSelected())
-//                    outputBox.setText(getErrors("hint", inputBox.getText().trim()));
-//                if (broadAnswer.isSelected())
-//                    outputBox.setText(getErrors("explanation", inputBox.getText().trim()));
-//                if (explanation.isSelected())
-//                    outputBox.setText(getErrors("complete", inputBox.getText().trim()));
-//            }
         }
     }
 
@@ -315,7 +295,7 @@ public class PageController {
     }
 
     public void addComment(){
-        if(addCommentary.isSelected()) {
+        if(addComment.isSelected()) {
             String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
             inputBox.setText(codeWithComments);
         }else{

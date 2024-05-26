@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 #pane{
     -fx-background-color: linear-gradient(from 0% 100% to 100% 0%, rgba(54,47,163,1) 5%, rgba(200,78,158,1) 16%, rgba(218,119,80,1) 52%, rgba(218,140,110,1) 77%, rgba(34,20,123,1) 98%);
@@ -7,9 +6,7 @@
 }
 
 #inputBox, #outputBox{
-    -fx-font-family: "Roboto Mono", monospace;
-    -fx-font-weight: 500;
-    -fx-font-style: normal;
+
     -fx-control-inner-background: #2a2828;
     -fx-prompt-text-fill: #b9b4b4;
     -fx-text-fill: #b9b4b4;
@@ -18,9 +15,6 @@
 #enterButton, #infopoint, #addButton, #copyButton{
     -fx-background-color: #2a2828;
     -fx-text-fill: #b9b4b4;
-    -fx-font-family: "Be Vietnam Pro", sans-serif;
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
 }
 
 #checkCode, #complexity, #testability, #translate, #addComment,
@@ -33,11 +27,9 @@
 }
 
 #selectedLanguage {
+
     -fx-background-color: rgba(255, 244, 244, 0.21);
     -fx-text-fill: #2a2828;
-    -fx-font-family: "Be Vietnam Pro", sans-serif;
-    -fx-font-weight: 300;
-    -fx-font-style: normal;
     -fx-padding: 0;
     -fx-background-radius: 0;
 }

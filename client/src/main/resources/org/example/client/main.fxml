@@ -123,5 +123,10 @@
                 <Image url="@../../../imgs/LoadingAnimation.gif" />
             </image>
         </ImageView>
+      <Label fx:id="copiedText" alignment="CENTER" layoutX="566.0" layoutY="35.0" prefHeight="17.0" prefWidth="80.0" style="-fx-font-weight: bold;" text="Copied!">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

@@ -1,5 +1,7 @@
 package org.example.client;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.stage.Modality;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URI;
@@ -85,7 +88,8 @@ public class PageController {
     private Button copyButton;
     @FXML
     private ImageView loadingAnim;
-
+    @FXML
+    private Label copiedText;
     private static String SERVER = "http://localhost:8080/";
 
     public void initialize(){
@@ -97,6 +101,7 @@ public class PageController {
         errorCorrection.setToggleGroup(toggleGroup);
         correctionOpt.setVisible(false);
         selectedLanguage.setVisible(false);
+        copiedText.setVisible(false);
         translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
             selectedLanguage.setPromptText("Language...");
@@ -302,6 +307,23 @@ public class PageController {
         StringSelection stringSelection = new StringSelection(inputBox.getText().trim());
 
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        copiedText.setVisible(true);
+        copiedText.setOpacity(1.0);
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(1.5));
+        visiblePause.setOnFinished(
+                event -> {
+                    FadeTransition fadeOut = new FadeTransition( Duration.seconds(1), copiedText);
+                    fadeOut.setFromValue(1.0);
+                    fadeOut.setToValue(0.0);
+                    fadeOut.setOnFinished(e -> {
+                        copiedText.setVisible(false);
+                        copiedText.setOpacity(0.0);
+                    });
+                    fadeOut.play();
+                }
+
+        );
+        visiblePause.play();
 
         clipboard.setContents(stringSelection, null);
     }

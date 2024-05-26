@@ -87,6 +87,11 @@
          </font>
       </RadioButton>
       <TextField fx:id="selectedLanguage" layoutX="221.0" layoutY="570.0" prefHeight="20.0" prefWidth="130.0" />
+      <Label alignment="CENTER" layoutX="577.0" layoutY="35.0" prefHeight="17.0" prefWidth="53.0" style="-fx-font-weight: bold;" text="Copied!">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
       <VBox fx:id="correctionOpt" layoutX="207.0" layoutY="541.0" prefHeight="78.0" prefWidth="143.0">
          <children>
             <RadioButton fx:id="hints" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Hints">

@@ -18,6 +18,9 @@ import java.awt.*;
 import java.awt.datatransfer.*;
 import javafx.stage.Stage;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -85,6 +88,8 @@ public class PageController {
 
     @FXML
     private Button copyButton;
+    private TargetDataLine targetDataLine;
+    private Thread audioRecordThread;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -305,4 +310,89 @@ public class PageController {
         stage.setScene(scene);
         stage.show();
     }
+
+//    public void captureAudio() throws LineUnavailableException {
+//        AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4, 44100, false);
+//        DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
+//
+//        TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
+//        targetDataLine.start();
+//
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.show();
+//
+//        Thread audioRecord = new Thread(() -> {
+//            AudioInputStream recordingStream = new AudioInputStream(targetDataLine);
+//            File output = new File("question.wav"); // Use WAV format for better compatibility
+//            try {
+//                AudioSystem.write(recordingStream, AudioFileFormat.Type.WAVE, output);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            } finally {
+//                targetDataLine.stop();
+//                targetDataLine.close();
+//            }
+//        });
+//
+//        audioRecord.start();
+//
+//        // Use a simple delay to simulate the duration of recording for demonstration purposes
+//        // In a real application, you should have a proper mechanism to stop the recording
+//        try {
+//            Thread.sleep(5000); // Record for 5 seconds
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // Interrupt the recording thread to stop recording
+//        audioRecord.interrupt();
+//    }
+
+    public void captureAudio() {
+        try {
+            captureAudioS();
+            // Record for a specified duration
+            Thread.sleep(5000); // Record for 5 seconds
+            stopRecording();
+        } catch (LineUnavailableException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void captureAudioS() throws LineUnavailableException {
+        AudioFormat audioFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 44100, 16, 2, 4, 44100, false);
+        DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
+
+        targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
+        targetDataLine.open(audioFormat); // Open the line with the specified format
+        targetDataLine.start(); // Start capturing audio
+
+        audioRecordThread = new Thread(() -> {
+            AudioInputStream recordingStream = new AudioInputStream(targetDataLine);
+            File output = new File("question.wav");
+            try {
+                AudioSystem.write(recordingStream, AudioFileFormat.Type.WAVE, output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        audioRecordThread.start();
+    }
+
+    public void stopRecording() {
+        if (targetDataLine != null) {
+            targetDataLine.stop();
+            targetDataLine.close();
+        }
+        if (audioRecordThread != null) {
+            try {
+                audioRecordThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }

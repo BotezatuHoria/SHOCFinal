@@ -123,5 +123,6 @@
                </image>
             </ImageView>
          </graphic></Button>
+      <Button fx:id="record" layoutX="576.0" layoutY="594.0" mnemonicParsing="false" onAction="#captureAudio" text="record" />
     </children>
 </AnchorPane>

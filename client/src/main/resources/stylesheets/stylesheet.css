@@ -5,14 +5,15 @@
 
 }
 
-#inputBox, #outputBox{
+#inputBox, #outputBox, #textAreaInfoPoint {
 
     -fx-control-inner-background: #2a2828;
     -fx-prompt-text-fill: #b9b4b4;
     -fx-text-fill: #b9b4b4;
 }
 
-#enterButton, #infopoint, #addButton, #copyButton{
+#enterButton, #infopoint, #addButton, #copyButton,#copyButton2{
+    -fx-control-inner-background: #2a2828;
     -fx-background-color: #2a2828;
     -fx-text-fill: #b9b4b4;
 }

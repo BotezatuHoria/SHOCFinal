@@ -1,5 +1,7 @@
 package org.example.client;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.stage.Modality;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URI;
@@ -31,7 +34,7 @@ public class PageController {
     private Button addButton;
 
     @FXML
-    private RadioButton addCommentary;
+    private RadioButton addComment;
 
     @FXML
     private RadioButton broadAnswer;
@@ -47,9 +50,6 @@ public class PageController {
 
     @FXML
     private RadioButton errorCorrection;
-
-    @FXML
-    private RadioButton explanation;
 
     @FXML
     private RadioButton hints;
@@ -87,8 +87,13 @@ public class PageController {
     @FXML
     private Button copyButton;
     @FXML
+    private Button copyButton2;
+    @FXML
     private ImageView loadingAnim;
-
+    @FXML
+    private Label copiedText;
+    @FXML
+    private Label copiedText2;
     private static String SERVER = "http://localhost:8080/";
 
     public void initialize(){
@@ -100,7 +105,8 @@ public class PageController {
         errorCorrection.setToggleGroup(toggleGroup);
         correctionOpt.setVisible(false);
         selectedLanguage.setVisible(false);
-        //toggleGroup.getSelectedToggle().selectedProperty();
+        copiedText.setVisible(false);
+        copiedText2.setVisible(false);
         translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
             selectedLanguage.setPromptText("Language...");
@@ -111,12 +117,10 @@ public class PageController {
         errorCorrection.selectedProperty().addListener((observable, oldValue, newValue) -> {
             hints.selectedProperty().set(false);
             broadAnswer.selectedProperty().set(false);
-            explanation.selectedProperty().set(false);
             correctionOpt.setVisible(newValue);
             ToggleGroup toggle = new ToggleGroup();
             hints.setToggleGroup(toggle);
             broadAnswer.setToggleGroup(toggle);
-            explanation.setToggleGroup(toggle);
         });
         loadingAnim.setVisible(false);
     }
@@ -148,7 +152,7 @@ public class PageController {
             return false;
         }
         if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected() || translate.isSelected()
-                || errorCorrection.isSelected() || broadAnswer.isSelected() || explanation.isSelected() || hints.isSelected())){
+                || errorCorrection.isSelected() || broadAnswer.isSelected()  || hints.isSelected())){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No option selected!");
             alert.setContentText("You need to select one of the available options!");
@@ -179,8 +183,6 @@ public class PageController {
                         responseText = getErrors("hint", inputBox.getText().trim());
                     if (broadAnswer.isSelected())
                         responseText = getErrors("explanation", inputBox.getText().trim());
-                    if (explanation.isSelected())
-                        responseText = getErrors("complete", inputBox.getText().trim());
                 }
 
                 // Update UI with the response
@@ -190,26 +192,6 @@ public class PageController {
                     loadingAnim.setVisible(false);
                 });
             }).start();
-//            if (testability.isSelected())
-//              outputBox.setText(checkTestability(inputBox.getText().trim()));
-//            else
-//            if (complexity.isSelected())
-//              outputBox.setText(checkComplexity(inputBox.getText().trim()));
-//            else
-//            if(translate.isSelected())
-//                outputBox.setText(translateCode(inputBox.getText().trim()));
-//            else
-//            if(checkCode.isSelected())
-//                outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
-//            else
-//            if (errorCorrection.isSelected()) {
-//                if (hints.isSelected())
-//                    outputBox.setText(getErrors("hint", inputBox.getText().trim()));
-//                if (broadAnswer.isSelected())
-//                    outputBox.setText(getErrors("explanation", inputBox.getText().trim()));
-//                if (explanation.isSelected())
-//                    outputBox.setText(getErrors("complete", inputBox.getText().trim()));
-//            }
         }
     }
 
@@ -255,8 +237,10 @@ public class PageController {
     public String translateCode(String code)
     {
         String lang="english";
-        if(selectedLanguage.getText()!=null)
-            lang=selectedLanguage.getText();
+        if(selectedLanguage.getText()!=null) {
+            lang = selectedLanguage.getText();
+            lang=lang.replace(" ","%20");
+        }
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SERVER + "api/gpt/translate?lang="+lang))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
@@ -315,7 +299,7 @@ public class PageController {
     }
 
     public void addComment(){
-        if(addCommentary.isSelected()) {
+        if(addComment.isSelected()) {
             String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
             inputBox.setText(codeWithComments);
         }else{
@@ -330,6 +314,47 @@ public class PageController {
         StringSelection stringSelection = new StringSelection(inputBox.getText().trim());
 
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        copiedText.setVisible(true);
+        copiedText.setOpacity(1.0);
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(1.5));
+        visiblePause.setOnFinished(
+                event -> {
+                    FadeTransition fadeOut = new FadeTransition( Duration.seconds(1), copiedText);
+                    fadeOut.setFromValue(1.0);
+                    fadeOut.setToValue(0.0);
+                    fadeOut.setOnFinished(e -> {
+                        copiedText.setVisible(false);
+                        copiedText.setOpacity(0.0);
+                    });
+                    fadeOut.play();
+                }
+
+        );
+        visiblePause.play();
+
+        clipboard.setContents(stringSelection, null);
+    }
+    public void copyToClipboardFromResult() {
+        StringSelection stringSelection = new StringSelection(inputBox.getText().trim());
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        copiedText2.setVisible(true);
+        copiedText2.setOpacity(1.0);
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(1.5));
+        visiblePause.setOnFinished(
+                event -> {
+                    FadeTransition fadeOut = new FadeTransition( Duration.seconds(1), copiedText2);
+                    fadeOut.setFromValue(1.0);
+                    fadeOut.setToValue(0.0);
+                    fadeOut.setOnFinished(e -> {
+                        copiedText2.setVisible(false);
+                        copiedText2.setOpacity(0.0);
+                    });
+                    fadeOut.play();
+                }
+
+        );
+        visiblePause.play();
 
         clipboard.setContents(stringSelection, null);
     }

@@ -87,11 +87,6 @@
          </font>
       </RadioButton>
       <TextField fx:id="selectedLanguage" layoutX="221.0" layoutY="570.0" prefHeight="20.0" prefWidth="130.0" />
-      <Label alignment="CENTER" layoutX="577.0" layoutY="35.0" prefHeight="17.0" prefWidth="53.0" style="-fx-font-weight: bold;" text="Copied!">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
       <VBox fx:id="correctionOpt" layoutX="207.0" layoutY="541.0" prefHeight="78.0" prefWidth="143.0">
          <children>
             <RadioButton fx:id="hints" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Hints">
@@ -110,15 +105,10 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </RadioButton>
-            <RadioButton fx:id="explanation" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Explanation">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </RadioButton>
          </children>
+         <padding>
+            <Insets top="4.0" />
+         </padding>
       </VBox>
       <Button fx:id="copyButton" layoutX="657.0" layoutY="30.0" mnemonicParsing="false" onAction="#copyToClipboard" prefHeight="26.0" prefWidth="39.0">
          <graphic>
@@ -128,10 +118,29 @@
                </image>
             </ImageView>
          </graphic></Button>
-        <ImageView fx:id="loadingAnim" fitHeight="87.0" fitWidth="224.0" layoutX="1022.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="loadingAnim" fitHeight="87.0" fitWidth="224.0" layoutX="1009.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../imgs/LoadingAnimation.gif" />
             </image>
         </ImageView>
+      <Label fx:id="copiedText" alignment="CENTER" layoutX="566.0" layoutY="35.0" prefHeight="17.0" prefWidth="80.0" style="-fx-font-weight: bold;" text="Copied!">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="copyButton2" layoutX="1410.0" layoutY="30.0" mnemonicParsing="false" onAction="#copyToClipboardFromResult" prefHeight="26.0" prefWidth="39.0">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../imgs/copy.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="copiedText2" alignment="CENTER" layoutX="1318.0" layoutY="35.0" prefHeight="17.0" prefWidth="80.0" style="-fx-font-weight: bold;" text="Copied!">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

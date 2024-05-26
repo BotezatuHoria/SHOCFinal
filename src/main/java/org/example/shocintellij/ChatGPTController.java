@@ -81,7 +81,7 @@ public class ChatGPTController {
                 "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
                 "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
-        String question = "Calculate the complexity of the following code. Try to analyse it a bit and see if it can be further optimized. Keep the explanation concise. The complexity does not need to be fully broken down.";
+        String question = "give the complexity of this code. give brief explanation of how you calculate it, but no unnecessary description of the code";
         String ans=askChatGpt(systemText,question,code);
         if(ans==null)
             return ResponseEntity.badRequest().build();

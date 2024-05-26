@@ -49,9 +49,6 @@ public class PageController {
     private RadioButton errorCorrection;
 
     @FXML
-    private RadioButton explanation;
-
-    @FXML
     private RadioButton hints;
 
     @FXML
@@ -100,7 +97,6 @@ public class PageController {
         errorCorrection.setToggleGroup(toggleGroup);
         correctionOpt.setVisible(false);
         selectedLanguage.setVisible(false);
-        //toggleGroup.getSelectedToggle().selectedProperty();
         translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
             selectedLanguage.setPromptText("Language...");
@@ -111,12 +107,10 @@ public class PageController {
         errorCorrection.selectedProperty().addListener((observable, oldValue, newValue) -> {
             hints.selectedProperty().set(false);
             broadAnswer.selectedProperty().set(false);
-            explanation.selectedProperty().set(false);
             correctionOpt.setVisible(newValue);
             ToggleGroup toggle = new ToggleGroup();
             hints.setToggleGroup(toggle);
             broadAnswer.setToggleGroup(toggle);
-            explanation.setToggleGroup(toggle);
         });
         loadingAnim.setVisible(false);
     }
@@ -148,7 +142,7 @@ public class PageController {
             return false;
         }
         if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected() || translate.isSelected()
-                || errorCorrection.isSelected() || broadAnswer.isSelected() || explanation.isSelected() || hints.isSelected())){
+                || errorCorrection.isSelected() || broadAnswer.isSelected()  || hints.isSelected())){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No option selected!");
             alert.setContentText("You need to select one of the available options!");
@@ -179,8 +173,6 @@ public class PageController {
                         responseText = getErrors("hint", inputBox.getText().trim());
                     if (broadAnswer.isSelected())
                         responseText = getErrors("explanation", inputBox.getText().trim());
-                    if (explanation.isSelected())
-                        responseText = getErrors("complete", inputBox.getText().trim());
                 }
 
                 // Update UI with the response

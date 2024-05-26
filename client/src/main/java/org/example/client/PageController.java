@@ -1,9 +1,12 @@
 package org.example.client;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
@@ -194,5 +197,14 @@ public class PageController {
             String codeWithComments = "/*\n" + outputBox.getText() + "\n */ \n" + inputBox.getText();
             inputBox.setText(codeWithComments);
         }
+    }
+
+    public void openInfopoint() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(InfopointController.class.getResource("infopoint.fxml"));
+        Stage stage=new Stage();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Infopoint");
+        stage.setScene(scene);
+        stage.show();
     }
 }

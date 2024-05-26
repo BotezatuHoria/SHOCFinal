@@ -3,9 +3,9 @@
 
 }
 
-#inputBox, #outputBox{
-    -fx-text-fill: #2a2828;
+#inputBox, #outputBox, #textArea{
     -fx-control-inner-background: #2a2828;
+    -fx-prompt-text-fill: #b9b4b4;
     -fx-text-fill: #b9b4b4;
 }
 

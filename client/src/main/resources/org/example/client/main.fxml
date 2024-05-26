@@ -81,7 +81,7 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Label>
-      <RadioButton fx:id="addComment" layoutX="572.0" layoutY="493.0" mnemonicParsing="false" text="Add as commentary to the code">
+      <RadioButton fx:id="addComment" layoutX="1134.0" layoutY="503.0" mnemonicParsing="false" text="Add as commentary to the code">
          <font>
             <Font size="14.0" />
          </font>

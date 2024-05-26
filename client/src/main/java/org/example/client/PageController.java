@@ -87,9 +87,13 @@ public class PageController {
     @FXML
     private Button copyButton;
     @FXML
+    private Button copyButton2;
+    @FXML
     private ImageView loadingAnim;
     @FXML
     private Label copiedText;
+    @FXML
+    private Label copiedText2;
     private static String SERVER = "http://localhost:8080/";
 
     public void initialize(){
@@ -102,6 +106,7 @@ public class PageController {
         correctionOpt.setVisible(false);
         selectedLanguage.setVisible(false);
         copiedText.setVisible(false);
+        copiedText2.setVisible(false);
         translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedLanguage.setVisible(newValue); // Show or hide the text field based on RadioButton state
             selectedLanguage.setPromptText("Language...");
@@ -320,6 +325,30 @@ public class PageController {
                     fadeOut.setOnFinished(e -> {
                         copiedText.setVisible(false);
                         copiedText.setOpacity(0.0);
+                    });
+                    fadeOut.play();
+                }
+
+        );
+        visiblePause.play();
+
+        clipboard.setContents(stringSelection, null);
+    }
+    public void copyToClipboardFromResult() {
+        StringSelection stringSelection = new StringSelection(inputBox.getText().trim());
+
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        copiedText2.setVisible(true);
+        copiedText2.setOpacity(1.0);
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(1.5));
+        visiblePause.setOnFinished(
+                event -> {
+                    FadeTransition fadeOut = new FadeTransition( Duration.seconds(1), copiedText2);
+                    fadeOut.setFromValue(1.0);
+                    fadeOut.setToValue(0.0);
+                    fadeOut.setOnFinished(e -> {
+                        copiedText2.setVisible(false);
+                        copiedText2.setOpacity(0.0);
                     });
                     fadeOut.play();
                 }

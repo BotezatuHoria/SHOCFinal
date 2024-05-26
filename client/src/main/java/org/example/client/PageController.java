@@ -132,7 +132,8 @@ public class PageController {
             alert.showAndWait();
             return false;
         }
-        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected() || translate.isSelected())){
+        if (!(checkCode.isSelected() || complexity.isSelected() || testability.isSelected() || translate.isSelected()
+                || errorCorrection.isSelected() || broadAnswer.isSelected() || explanation.isSelected() || hints.isSelected())){
             Alert alert=new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No option selected!");
             alert.setContentText("You need to select one of the available options!");
@@ -154,7 +155,12 @@ public class PageController {
             if(checkCode.isSelected())
                 outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
             if (errorCorrection.isSelected()) {
-                ///
+                if (hints.isSelected())
+                    outputBox.setText(getErrors("hint", inputBox.getText().trim()));
+                if (broadAnswer.isSelected())
+                    outputBox.setText(getErrors("explanation", inputBox.getText().trim()));
+                if (explanation.isSelected())
+                    outputBox.setText(getErrors("complete", inputBox.getText().trim()));
             }
         }
     }
@@ -225,6 +231,25 @@ public class PageController {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(SERVER + "api/gpt/codeExplanation"))
+                .POST(HttpRequest.BodyPublishers.ofString(code))
+                .build();
+
+        HttpClient client = HttpClient.newHttpClient();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected status code: " + response.statusCode());
+            }
+            return response.body();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "An error occurred: " + e.getMessage();
+        }
+    }
+
+    public String getErrors(String type, String code) {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER + "api/gpt/errors?type=" + type))
                 .POST(HttpRequest.BodyPublishers.ofString(code))
                 .build();
 

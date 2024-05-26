@@ -20,6 +20,15 @@ import java.net.http.HttpResponse;
 public class PageController {
 
     @FXML
+    private Button addButton;
+
+    @FXML
+    private RadioButton addCommentary;
+
+    @FXML
+    private RadioButton broadAnswer;
+
+    @FXML
     private RadioButton checkCode;
 
     @FXML
@@ -27,6 +36,15 @@ public class PageController {
 
     @FXML
     private Button enterButton;
+
+    @FXML
+    private RadioButton errorCorrection;
+
+    @FXML
+    private RadioButton explanation;
+
+    @FXML
+    private RadioButton hints;
 
     @FXML
     private Button infopoint;
@@ -41,20 +59,22 @@ public class PageController {
     private TextArea outputBox;
 
     @FXML
-    private Label size;
-
-    @FXML
     private AnchorPane pane;
 
-    @FXML
-    private RadioButton testability;
-    @FXML
-    private RadioButton translate;
     @FXML
     private TextField selectedLanguage;
 
     @FXML
-    private RadioButton addCommentary;
+    private Label size;
+
+    @FXML
+    private RadioButton testability;
+
+    @FXML
+    private RadioButton translate;
+
+    @FXML
+    private VBox correctionOpt;
 
     private static String SERVER = "http://localhost:8080/";
 
@@ -64,6 +84,8 @@ public class PageController {
         complexity.setToggleGroup(toggleGroup);
         testability.setToggleGroup(toggleGroup);
         translate.setToggleGroup(toggleGroup);
+        errorCorrection.setToggleGroup(toggleGroup);
+        correctionOpt.setVisible(false);
         selectedLanguage.setVisible(false);
         //toggleGroup.getSelectedToggle().selectedProperty();
         translate.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -72,6 +94,16 @@ public class PageController {
             selectedLanguage.setStyle("-fx-font-size: 14px; -fx-prompt-text-fill: #2a2828; -fx-translate-y: -2px");
 
 
+        });
+        errorCorrection.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            hints.selectedProperty().set(false);
+            broadAnswer.selectedProperty().set(false);
+            explanation.selectedProperty().set(false);
+            correctionOpt.setVisible(newValue);
+            ToggleGroup toggle = new ToggleGroup();
+            hints.setToggleGroup(toggle);
+            broadAnswer.setToggleGroup(toggle);
+            explanation.setToggleGroup(toggle);
         });
     }
 
@@ -121,6 +153,9 @@ public class PageController {
                 outputBox.setText(translateCode(inputBox.getText().trim()));
             if(checkCode.isSelected())
                 outputBox.setText(getCodeExplanation(inputBox.getText().trim()));
+            if (errorCorrection.isSelected()) {
+                ///
+            }
         }
     }
 

@@ -32,7 +32,7 @@
         </Button>
         <Button fx:id="enterButton" layoutX="371.0" layoutY="564.0" mnemonicParsing="false" onAction="#sendRequest" prefHeight="32.0" prefWidth="80.0" text="Enter" />
         <Button fx:id="addButton" layoutX="885.0" layoutY="490.0" mnemonicParsing="false" onAction="#addComment" prefHeight="20.0" prefWidth="66.0" text="Add" />
-      <VBox layoutX="71.0" layoutY="495.0" prefHeight="106.0" prefWidth="167.0">
+      <VBox layoutX="71.0" layoutY="495.0" prefHeight="124.0" prefWidth="161.0">
          <children>
               <RadioButton fx:id="checkCode" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Check what it does">
                <font>
@@ -63,6 +63,14 @@
                     <Insets top="5.0" />
                 </VBox.margin>
             </RadioButton>
+            <RadioButton fx:id="errorCorrection" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Error correction">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </RadioButton>
          </children>
       </VBox>
       <Label fx:id="size" alignment="CENTER_RIGHT" layoutX="320.0" layoutY="483.0" prefHeight="6.0" prefWidth="130.0" text="0/2000">
@@ -75,6 +83,34 @@
             <Font size="14.0" />
          </font>
       </RadioButton>
-      <TextField fx:id="selectedLanguage" layoutX="223.0" layoutY="571.0" prefHeight="20.0" prefWidth="130.0" />
+      <TextField fx:id="selectedLanguage" layoutX="221.0" layoutY="570.0" prefHeight="20.0" prefWidth="130.0" />
+      <VBox fx:id="correctionOpt" layoutX="221.0" layoutY="541.0" prefHeight="78.0" prefWidth="143.0">
+         <children>
+            <RadioButton fx:id="hints" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Hints">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="broadAnswer" mnemonicParsing="false" prefHeight="20.0" prefWidth="148.0" text="Broad answer">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="explanation" mnemonicParsing="false" prefHeight="20.0" prefWidth="143.0" text="Explanation">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </RadioButton>
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

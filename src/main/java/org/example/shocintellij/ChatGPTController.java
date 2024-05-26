@@ -29,7 +29,7 @@ public class ChatGPTController {
                 "and provide the user with one of these 3 options: 1. hints, " +
                 "2. a more in depth explanation, but without adding the code with the solution, " +
                 "3. a full in depth explanation and the code for this solution." +
-                "Also, if the code implements a known algorithm (ex. djikstra, kruskal, binary search) also mention the algorithm.";
+                "Also, if the code implements a known algorithm (ex. dijkstra, kruskal, binary search) also mention the algorithm.";
         String question = "";
         switch (type) {
             case "hint" -> question = "Please give me some hints related of the errors that I encounter in my code";
@@ -61,7 +61,7 @@ public class ChatGPTController {
                 " with a master's degree in Computer Science and Engineering. Your job is to review the " +
                 "code of others and to focus on one of these 4 aspects: 1. testability, 2. complexity, 3. " +
                 "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
-                "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
+                "(ex. dijkstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
                 "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
         String question = "Check the testability of this code. Also try to include how much of the code can be covered by tests and the aspects that make it testable or the ones that can be improved. Try to be concise.";
@@ -78,7 +78,7 @@ public class ChatGPTController {
                 " with a master's degree in Computer Science and Engineering. Your job is to review the " +
                 "code of others and to focus on one of these 4 aspects: 1. testability, 2. complexity, 3. " +
                 "adding comments, 4. explaining the code. For the 4th, if the code implements a known algorithm " +
-                "(ex. djikstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
+                "(ex. dijkstra, kruskal, binary search) also mention the algorithm. For the comments, only add " +
                 "them as text, do not include any code. In all cases, try to give a concise explanation. If you " +
                 "do not detect the input as code, please indicate that by saying it is not a valid input. Keep the answer short";
         String question = "give the complexity of this code. give brief explanation of how you calculate it, but no unnecessary description of the code";
@@ -93,7 +93,7 @@ public class ChatGPTController {
     {
         String systemText = "For this conversation, act like a senior software engineer/developer," +
                 " with a master's degree in Computer Science and Engineering. Keep the answer short";
-        String question = "Describe what this code does. Try to analyse it step by step a bit. Keep the explanation concise. Do not write any code. If the code implements a specific known algorithm such as djikstra, kruskal or merge sort, also specify which one it implements. Keep the answer short";
+        String question = "Describe what this code does. Try to analyse it step by step a bit. Keep the explanation concise. Do not write any code. If the code implements a specific known algorithm such as dijkstra, kruskal or merge sort, also specify which one it implements. Keep the answer short";
         String ans = askChatGpt(systemText,question,code);
         if(ans == null)
             return ResponseEntity.badRequest().build();

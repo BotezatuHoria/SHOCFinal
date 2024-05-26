@@ -335,7 +335,7 @@ public class PageController {
         clipboard.setContents(stringSelection, null);
     }
     public void copyToClipboardFromResult() {
-        StringSelection stringSelection = new StringSelection(inputBox.getText().trim());
+        StringSelection stringSelection = new StringSelection(outputBox.getText().trim());
 
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         copiedText2.setVisible(true);

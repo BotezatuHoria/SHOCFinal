@@ -19,7 +19,8 @@ import java.util.*;
 @RestController
 public class ChatGPTController {
 
-    public static final String apiKey = "sk-proj-W8B5lUA5vZgj4QwcKQCsT3BlbkFJ0F5aX0Zuh91G1BT9hari";
+    public static final String apiKey = System.getenv("OPENAI_API_KEY");
+
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     @PostMapping("/api/gpt/errors")
